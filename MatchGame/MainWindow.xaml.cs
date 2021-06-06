@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MatchGame
 {
@@ -48,6 +39,30 @@ namespace MatchGame
                 string nextEmoji = animalEmoji[index];
                 textBlock.Text = nextEmoji;
                 animalEmoji.RemoveAt(index);
+            }
+        }
+
+        private TextBlock _lasTextBlockClicked;
+        private bool _findingMatch;
+
+        private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = sender as TextBlock;
+            if (_findingMatch == false)
+            {
+                textBlock.Visibility = Visibility.Hidden;
+                _lasTextBlockClicked = textBlock;
+                _findingMatch = true;
+            }
+            else if (textBlock.Text == _lasTextBlockClicked.Text)
+            {
+                textBlock.Visibility = Visibility.Hidden;
+                _findingMatch = false;
+            }
+            else
+            {
+                _lasTextBlockClicked.Visibility = Visibility.Visible;
+                _findingMatch = false;
             }
         }
     }
